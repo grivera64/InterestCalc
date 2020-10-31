@@ -11,9 +11,9 @@ public class CalcInterest
 {
    
    //making the public scanner
-   public static Scanner keyboard = new Scanner(System.in);
+   public static Scanner keyboard = new Scanner(System.in);	//create a local (to the class, it's a global) variable 
    
-   public static void main(String[] args) throws IOException
+   public static void main(String[] args) throws IOException	//if there is no input/output, don't crash program
    {
       File input;  //name of the files
       Scanner inFile;   //declaring as Scanner, but not having file that is read name yet
@@ -28,7 +28,7 @@ public class CalcInterest
       System.out.print("Enter File name:\t");
       fileName = keyboard.nextLine();  //taking fileName from user
       input = new File(fileName);   //opening file
-      if (!input.exists())
+      if (!input.exists())	//checking if the file exists
       {
          System.out.print("\nCould not open file.  Program terminated.");
          System.exit(0);
@@ -36,7 +36,7 @@ public class CalcInterest
       
       inFile = new Scanner(input);  //scanner that reads from the file
       
-      if (inFile.hasNext())
+      if (inFile.hasNext())	//checking if there is data on the file
       {
          System.out.println("\nName                Years  Deposit Amount   Interest Earned  Total ");
       }
@@ -46,14 +46,14 @@ public class CalcInterest
          System.exit(0);
       }
       
-      while (inFile.hasNext())   //checking if the file has contents to read
-      {
-         fullName = inFile.nextLine();
-         depositAmt = inFile.nextDouble();
-         years = inFile.nextFloat();
-         codeString = inFile.nextLine();
+      while (inFile.hasNext())   //checking if the file (still) has (more) contents to read
+      {							//this is done for every 2 lines of data on the file (must be even # of lines)
+         fullName = inFile.nextLine();			//The file format:
+         depositAmt = inFile.nextDouble();		//	Name
+         years = inFile.nextFloat();			//	depositAmt years code
+         codeString = inFile.nextLine();		//	...
          
-         if (years >= 5)
+         if (years >= 5)		//setting the interest rate based on the years variable
          {
             interestRate = 0.045;
          }
@@ -84,7 +84,7 @@ public class CalcInterest
          
         // System.out.println("DEBUG CODESTRING: " + codeString);
          
-         for (int i = 0; i < codeString.length(); i++)
+         for (int i = 0; i < codeString.length(); i++)	//checking for the location of the character and saving it
          {
             //System.out.print("CODE STRING " + i + ": " + codeString.charAt(i) + " ");
             if (!Character.isLetter(codeString.charAt(i)))
@@ -99,7 +99,7 @@ public class CalcInterest
             }
          }
          
-         switch (code)
+         switch (code)	//checking numCoumpounded based on letter (not case-sensitive)
          {
             case 'A':
             case 'a':
@@ -128,12 +128,12 @@ public class CalcInterest
          //System.out.println("DEBUG: NUMCOMPOUNDED: " + numCompounded);
          
          
-         total = depositAmt * (Math.pow((1 + (interestRate / numCompounded)), (numCompounded * years)));
+         total = depositAmt * (Math.pow((1 + (interestRate / numCompounded)), (numCompounded * years)));//compound interest formula
          
-         interestEarned = total - depositAmt;
+         interestEarned = total - depositAmt;	//it's the added interest
          
          
-         System.out.printf("%-20s%-7.2f$%-16.2f$%-15.2f$%-7.2f\n", fullName, years, depositAmt, interestEarned, total);
+         System.out.printf("%-20s%-7.2f$%-16.2f$%-15.2f$%-7.2f\n", fullName, years, depositAmt, interestEarned, total); //printing the data in one line
       
          
       }
